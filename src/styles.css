@@ -1,1 +1,86 @@
-/* You can add global styles to this file, and also import other style files */
+/* Tokens base (modo claro por defecto) */
+:root{
+  --bg:#ffffff;
+  --fg:#0f172a;
+  --muted:#475569;
+  --accent:#0ea5e9;   /* cian */
+  --accent-2:#6366f1; /* índigo */
+
+  /* Colores del patrón */
+  --s:82px;
+  --c1:#b2b2b2;
+  --c2:#ffffff;
+  --c3:#d9d9d9;
+}
+
+html, body { height: 100%; margin:0 }
+
+/* Fondo patrón desacoplado del contenido */
+body{ position: relative; color: var(--fg); background: var(--bg) }
+body::before{
+  content:""; position: fixed; inset:0; z-index:-1; opacity:.38;
+  background:
+    /* tinte sutil con el acento para coherencia */
+    linear-gradient(0deg,
+      color-mix(in oklab, var(--accent) 10%, transparent),
+      color-mix(in oklab, var(--accent-2) 10%, transparent)
+    ),
+    conic-gradient(from -60deg at 50% calc(100% / 3), var(--c3) 0 120deg, #0000 0),
+    conic-gradient(from 120deg at 50% calc(200% / 3), var(--c3) 0 120deg, #0000 0),
+    conic-gradient(from 60deg at calc(200% / 3), var(--c3) 60deg, var(--c2) 0 120deg, #0000 0),
+    conic-gradient(from 180deg at calc(100% / 3), var(--c1) 60deg, var(--c3) 0 120deg, #0000 0),
+    linear-gradient(90deg, var(--c1) calc(100% / 6), var(--c2) 0 50%, var(--c1) 0 calc(500% / 6), var(--c2) 0);
+  background-size: calc(1.732 * var(--s)) var(--s);
+  /* Desvanecer hacia top para no competir con el hero */
+  mask-image: radial-gradient(1200px 600px at 50% 0, #000 60%, transparent 100%);
+}
+
+/* --------- MODO CLARO --------- */
+:root[data-theme="light"]{
+  --bg:#ffffff;
+  --fg:#0f172a;        /* texto */
+  --muted:#475569;
+
+  /* acentos más oscuros para mejor contraste en claro */
+  --accent:#0b72e7;    /* azul 600 aprox */
+  --accent-2:#4f46e5;  /* índigo 600 */
+
+  /* nav glass en claro: un poco más “sólido” */
+  --nav-bg: rgba(255,255,255,0.72);
+  --nav-border: rgba(15,23,42,0.15);
+
+  /* patrón claro */
+  --s:82px;
+  --c1:#b8c5d6;
+  --c2:#f6fbff;
+  --c3:#d2dbea;
+}
+
+/* --------- MODO OSCURO (igual que te gustaba) --------- */
+:root[data-theme="dark"]{
+  --bg:#0b1220;
+  --fg:#e2e8f0;
+  --muted:#94a3b8;
+
+  --accent:#22d3ee;    /* cian brillante */
+  --accent-2:#8b5cf6;  /* violeta */
+
+  --nav-bg: rgba(0,73,144,0.35);
+  --nav-border: rgba(255,255,255,0.18);
+
+  /* patrón oscuro */
+  --s:82px;
+  --c1:#1f2937;
+  --c2:#0b1220;
+  --c3:#111827;
+}
+
+/* --------- AUTO: hereda del sistema --------- */
+@media (prefers-color-scheme: dark){
+  :root[data-theme="auto"]{ /* mismos tokens que dark */
+    --bg:#0b1220; --fg:#e2e8f0; --muted:#94a3b8;
+    --accent:#22d3ee; --accent-2:#8b5cf6;
+    --nav-bg: rgba(0,73,144,0.35); --nav-border: rgba(255,255,255,0.18);
+    --s:82px; --c1:#1f2937; --c2:#0b1220; --c3:#111827;
+  }
+}

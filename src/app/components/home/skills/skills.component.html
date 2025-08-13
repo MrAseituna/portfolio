@@ -1,0 +1,47 @@
+<section class="skills section" id="stack" aria-labelledby="skills-title">
+  <div class="container">
+    <header class="head">
+      <h2 id="skills-title">{{ title }}</h2>
+      <p class="meta">
+        Un stack centrado en rendimiento, accesibilidad y buenas prácticas.
+      </p>
+    </header>
+
+    <div class="grid">
+      @for (group of groups; track trackGroup($index, group)) {
+        <article class="card" role="group" [attr.aria-labelledby]="'g-' + group.title">
+          <header class="card-head">
+            <i class="bi" [ngClass]="group.icon" aria-hidden="true"></i>
+            <h3 id="{{ 'g-' + group.title }}">{{ group.title }}</h3>
+          </header>
+
+          <ul class="list">
+            @for (s of group.skills; track trackSkill($index, s)) {
+              <li class="skill">
+                <div class="row">
+                  <span class="name">{{ s.name }}</span>
+                  <span class="val" [attr.aria-label]="s.level + '%'">{{ s.level }}%</span>
+                </div>
+
+                <div
+                  class="meter"
+                  role="progressbar"
+                  [attr.aria-valuemin]="0"
+                  [attr.aria-valuemax]="100"
+                  [attr.aria-valuenow]="s.level"
+                  [title]="(s.note ? s.note + ' · ' : '') + s.level + '%'"
+                >
+                  <span class="fill" [style.width.%]="s.level"></span>
+                </div>
+
+                @if (s.note) {
+                  <div class="note">{{ s.note }}</div>
+                }
+              </li>
+            }
+          </ul>
+        </article>
+      }
+    </div>
+  </div>
+</section>

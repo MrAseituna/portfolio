@@ -1,0 +1,55 @@
+<section class="hero" id="inicio" aria-labelledby="hero-title"
+         (mousemove)="onMove($event)" (mouseleave)="resetTilt()">
+  <div class="grid">
+    <!-- Columna izquierda: copy -->
+    <div class="left">
+      <p class="kicker">Desarrollador web</p>
+
+      <h1 id="hero-title" class="title">
+        Construyo experiencias
+        <span class="gradient">rápidas</span>,
+        <span class="gradient">accesibles</span>
+        y <span class="gradient">mantenibles</span>.
+      </h1>
+
+      <p class="lead">
+        Frontend con Angular/TypeScript y bases sólidas de backend. Enfoque en rendimiento,
+        accesibilidad y buenas prácticas para productos escalables.
+      </p>
+
+      <div class="cta">
+        <a class="btn primary" [routerLink]="'/'" fragment="proyectos">
+          <i class="bi bi-rocket-takeoff" aria-hidden="true"></i>
+          <span>Ver proyectos</span>
+        </a>
+        <a class="btn ghost" href="CV_TuNombre.pdf" target="_blank" rel="noopener">
+          <i class="bi bi-file-text" aria-hidden="true"></i>
+          <span>CV</span>
+        </a>
+        <a class="btn ghost" [routerLink]="'/'" fragment="contacto">
+          <i class="bi bi-envelope-paper" aria-hidden="true"></i>
+          <span>Contacto</span>
+        </a>
+      </div>
+
+      <ul class="chips" aria-label="Tecnologías destacadas">
+        <li class="chip"><i class="bi bi-braces-asterisk" aria-hidden="true"></i> Angular</li>
+        <li class="chip"><i class="bi bi-code-slash" aria-hidden="true"></i> TypeScript</li>
+        <li class="chip"><i class="bi bi-hdd-network" aria-hidden="true"></i> Node y Express</li>
+        <li class="chip"><i class="bi bi-layers" aria-hidden="true"></i> CSS</li>
+      </ul>
+    </div>
+
+    <!-- Columna derecha: tarjeta 3D con código -->
+    <div class="right" aria-hidden="true">
+      <div class="card3d" #card>
+        <div class="glow"></div>
+        <div class="card-header">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          <span class="filename">hero.component.ts</span>
+        </div>
+        <pre class="code"><code [textContent]="snippet"></code></pre>
+      </div>
+    </div>
+  </div>
+</section>

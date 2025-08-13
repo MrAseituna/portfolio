@@ -1,0 +1,133 @@
+/* Mejora de contraste SOLO en claro */
+:host-context([data-theme="light"]) .ink{
+  height: 3px; /* 2px -> 3px para que el azul se lea mejor */
+}
+:host-context([data-theme="light"]) .nav-item:hover .bi,
+:host-context([data-theme="light"]) .nav-item:focus-visible .bi{
+  color: var(--accent);
+  filter: drop-shadow(0 2px 6px color-mix(in oklab, var(--accent) 35%, transparent));
+}
+
+/* Contenedor centrado (menos margen) */
+.nav-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 20px auto;
+  isolation: isolate;
+}
+
+/* Barra glass más compacta */
+.nav-bar {
+  list-style: none;
+  display: flex;
+  gap: 12px;                      /* antes 18px */
+  padding: 10px 16px 14px;        /* antes 16px 26px 22px */
+  margin: 0;
+  align-items: center;
+  position: relative;
+  border-radius: 12px;            /* antes 16px */
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.05)),
+    var(--nav-bg);
+  backdrop-filter: blur(8px) saturate(130%);
+  -webkit-backdrop-filter: blur(8px) saturate(130%);
+  border: 1px solid var(--nav-border);
+  box-shadow:
+    0 8px 22px rgba(0,0,0,0.30),
+    0 10px 22px rgba(14,165,233,0.14);
+  overflow: hidden;
+}
+.nav-bar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: .5px;                  /* borde más sutil */
+  background: linear-gradient(120deg, rgba(14,165,233,0.5), rgba(99,102,241,0.5));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  opacity: .55;
+}
+
+/* Ink bar más fina y cercana al texto */
+.ink {
+  position: absolute;
+  left: 0;
+  bottom: 6px;                    /* antes 8px */
+  height: 2px;                    /* antes 3px */
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  box-shadow: 0 4px 12px color-mix(in oklab, var(--accent) 40%, transparent);
+  transform: translateX(0);
+  transition: transform .28s cubic-bezier(.2,.8,.2,1), width .28s cubic-bezier(.2,.8,.2,1);
+  pointer-events: none;
+}
+
+/* Separador antes del botón de tema, más fino */
+.divider {
+  width: 1px;
+  align-self: stretch;
+  background: color-mix(in oklab, var(--fg) 14%, transparent);
+  margin: 0 4px;                  /* antes 6px */
+}
+
+/* Item más pequeño pero con target cómodo */
+.nav-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;                       /* antes 10px */
+  color: var(--fg);
+  text-decoration: none;
+  padding: 10px 12px;             /* antes 12px 16px */
+  border-radius: 10px;            /* antes 12px */
+  min-height: 40px;               /* asegura accesibilidad táctil */
+  font-weight: 700;
+  font-size: .98rem;              /* antes 1.08rem */
+  border: 1px solid transparent;
+  outline: none;
+  transition: transform .28s cubic-bezier(.2,.8,.2,1), color .28s;
+}
+
+/* Icono más pequeño */
+.nav-item .bi {
+  font-size: 1.3rem;              /* antes 1.6rem */
+  line-height: 1;
+  filter: drop-shadow(0 1px 4px rgba(14,165,233,.22));
+  transition: transform .28s cubic-bezier(.2,.8,.2,1), color .28s;
+}
+
+/* Hover / Focus más discreto */
+.nav-item:hover,
+.nav-item:focus-visible { transform: translateY(-1px); }
+.nav-item:hover .bi,
+.nav-item:focus-visible .bi { transform: translateY(-1px); color: var(--accent); }
+
+/* Estado activo */
+.active { color: #eaf6ff; text-shadow: 0 1px 0 rgba(255,255,255,.06); }
+.active .bi { color: var(--accent); }
+
+/* Botón de tema en versión compacta */
+.theme-toggle {
+  background: color-mix(in oklab, var(--fg) 6%, transparent);
+  border-color: color-mix(in oklab, var(--fg) 16%, transparent);
+  cursor: pointer;
+}
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+  background: color-mix(in oklab, var(--fg) 10%, transparent);
+}
+
+/* Responsive: compacto aún más en móviles */
+@media (max-width: 480px) {
+  .nav-item .label { display: none; }
+  .nav-item { padding: 10px; }
+  .nav-bar { gap: 8px; padding: 10px 12px 12px; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .nav-item, .nav-item .bi, .ink, .nav-bar, .nav-bar::before { transition: none !important; }
+}

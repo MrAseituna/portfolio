@@ -1,0 +1,4 @@
+<button class="theme-toggle" (click)="toggle()" [attr.aria-label]="'Cambiar tema: ' + label" type="button">
+  <i class="bi" [ngClass]="icon" aria-hidden="true"></i>
+  <span class="txt">{{ label }}</span>
+</button>

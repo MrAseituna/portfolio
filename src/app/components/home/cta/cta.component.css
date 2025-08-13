@@ -1,0 +1,116 @@
+/* Contenedor CTA */
+.cta{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  margin-top: 12px;
+  margin-bottom: clamp(24px, 4vw, 56px);
+  justify-content: center; /* centrado horizontal */
+}
+
+/* Botón base */
+.btn{
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .8rem 1rem;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1rem;
+  border: 1px solid transparent;
+  text-decoration: none;
+  color: var(--fg);
+  background: color-mix(in oklab, var(--bg) 80%, transparent);
+  transition: transform .25s ease, background .25s ease, border-color .25s ease, filter .25s ease;
+  will-change: transform;
+}
+.btn i{ font-size: 1.1rem; line-height: 1; }
+
+/* Primario: degradado de acento */
+.btn.primary{
+  color: #fff;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  border: 0;
+  box-shadow: 0 8px 26px color-mix(in oklab, var(--accent) 35%, transparent);
+}
+.btn.primary:hover{ transform: translateY(-2px); filter: brightness(1.02); }
+.btn.primary:active{ transform: translateY(-1px); }
+
+/* Ghost: borde y fondo sutil (glass) */
+.btn.ghost{
+  background: color-mix(in oklab, var(--bg) 72%, transparent);
+  border-color: color-mix(in oklab, var(--fg) 18%, transparent);
+}
+.btn.ghost:hover{
+  transform: translateY(-2px);
+  background: color-mix(in oklab, var(--fg) 10%, transparent);
+  border-color: color-mix(in oklab, var(--fg) 28%, transparent);
+}
+.btn.ghost:active{ transform: translateY(-1px); }
+
+/* Accesibilidad: focus visible claro */
+.btn:focus-visible{
+  outline: none;
+  box-shadow:
+    0 0 0 3px color-mix(in oklab, var(--accent) 35%, transparent),
+    0 8px 26px color-mix(in oklab, var(--accent) 25%, transparent);
+}
+
+/* Modo claro: un pelín más de contraste en ghost */
+:host-context([data-theme="light"]) .btn.ghost{
+  border-color: color-mix(in oklab, var(--fg) 22%, transparent);
+  background: color-mix(in oklab, var(--bg) 78%, transparent);
+}
+
+/* Wrapper centrado (mismo elemento con ambas clases) */
+.cta-wrap.center{
+  display: grid;
+  place-items: center;
+  text-align: center;
+  gap: 10px;
+  margin-top: 18px;
+
+  /* separación inferior para que no se pegue al borde */
+  margin-bottom: clamp(24px, 4vw, 56px);
+  padding-bottom: max(0px, env(safe-area-inset-bottom)); /* iPhone safe area */
+
+  position: relative;     /* para el separador superior */
+  padding-top: 8px;
+}
+
+/* Título y subtítulo */
+.cta-title{
+  margin: 0;
+  font-size: clamp(1.35rem, 0.8vw + 1rem, 1.8rem);
+  font-weight: 800;
+  letter-spacing: .3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.cta-sub{
+  margin: 0 0 6px;
+  color: var(--muted);
+  max-width: 60ch;
+}
+
+/* Separador sutil arriba */
+.cta-wrap.center::before{
+  content:"";
+  position:absolute; top:0; left:50%; transform:translateX(-50%);
+  width:min(520px, 80%); height:1px;
+  background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--fg) 18%, transparent), transparent);
+  opacity:.6;
+}
+
+/* Responsive: botones algo más compactos en móvil */
+@media (max-width: 480px){
+  .cta{ gap: 8px; }
+  .btn{ padding: .7rem .9rem; font-size: .95rem; }
+  .btn i{ font-size: 1rem; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .btn{ transition: none !important; }
+}
