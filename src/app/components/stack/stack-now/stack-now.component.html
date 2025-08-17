@@ -1,0 +1,48 @@
+<section class="stack section" id="stack" aria-labelledby="stack-title">
+  <div class="container">
+    <header class="head">
+      <h2 id="stack-title">{{ title }}</h2>
+      <p class="meta">Mi stack principal. Pasa el ratón: las tecnologías reaccionan.</p>
+
+      <div class="filters" role="tablist" aria-label="Filtros de categoría">
+        @for (cat of categories; track cat) {
+          <button
+            type="button"
+            class="chip-filter"
+            role="tab"
+            [attr.aria-selected]="isActive(cat)"
+            [class.active]="isActive(cat)"
+            (click)="setFilter(cat)"
+          >
+            {{ cat }}
+          </button>
+        }
+      </div>
+    </header>
+
+    <div class="cloud"
+         #cloud
+         (mousemove)="onMove($event)"
+         (mouseleave)="resetOffsets()"
+         role="list"
+         aria-label="Tecnologías">
+      @for (t of visible; track t.name) {
+        <a
+          #chipEl
+          class="chip"
+          role="listitem"
+          [href]="t.url || null"
+          [attr.title]="t.note || t.name"
+          target="_blank" rel="noopener"
+          [attr.aria-label]="t.name"
+          [attr.data-cat]="t.category"
+          [class.is-link]="!!t.url"
+        >
+          <span class="dot" aria-hidden="true"></span>
+          <i class="bi" [ngClass]="t.icon" aria-hidden="true"></i>
+          <span class="label">{{ t.name }}</span>
+        </a>
+      }
+    </div>
+  </div>
+</section>

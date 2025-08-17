@@ -1,0 +1,49 @@
+<section class="learning section" aria-labelledby="learn-title">
+  <div class="container">
+    <header class="head">
+      <h2 id="learn-title">{{ title }}</h2>
+      <p class="meta">Tecnologías que estoy explorando ahora mismo.</p>
+    </header>
+
+    <div class="learn-grid" role="list">
+      @for (it of items; track trackByName($index, it)) {
+        <a
+          class="learn-card"
+          role="listitem"
+          [href]="it.url"
+          target="_blank"
+          rel="noopener"
+          [title]="'Abrir documentación de ' + it.name"
+          [style.--from]="it.colorFrom || 'var(--accent)'"
+          [style.--to]="it.colorTo   || 'var(--accent-2)'"
+        >
+          <div class="halo" aria-hidden="true"></div>
+
+          <div class="logo-wrap" aria-hidden="true">
+            <!-- Logo React (inline SVG) -->
+            @if (it.icon === 'react') {
+              <svg class="logo react" viewBox="0 0 256 256" width="64" height="64" focusable="false">
+                <circle cx="128" cy="128" r="24" fill="currentColor"></circle>
+                <g fill="none" stroke="currentColor" stroke-width="12">
+                  <ellipse cx="128" cy="128" rx="100" ry="40" transform="rotate(0 128 128)"></ellipse>
+                  <ellipse cx="128" cy="128" rx="100" ry="40" transform="rotate(60 128 128)"></ellipse>
+                  <ellipse cx="128" cy="128" rx="100" ry="40" transform="rotate(120 128 128)"></ellipse>
+                </g>
+              </svg>
+            } @else {
+              <i class="bi bi-lightning-charge logo generic" aria-hidden="true"></i>
+            }
+          </div>
+
+          <div class="content">
+            <h3 class="name">{{ it.name }}</h3>
+            @if (it.desc) { <p class="desc">{{ it.desc }}</p> }
+            <span class="cta">
+              Ver docs <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i>
+            </span>
+          </div>
+        </a>
+      }
+    </div>
+  </div>
+</section>

@@ -1,5 +1,5 @@
 import { NavItem } from '../../../models/nav-item';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { NgClass } from '@angular/common';
 import {
   AfterViewInit,
@@ -18,7 +18,7 @@ type Theme = 'auto' | 'dark' | 'light';
 @Component({
   selector: 'app-nav',
   standalone: true,
-  imports: [RouterLink, NgClass],
+  imports: [RouterLink, RouterLinkActive, NgClass],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css'
 })
@@ -27,8 +27,8 @@ export class NavComponent implements AfterViewInit {
   items: NavItem[] = [
     { label: 'Inicio',     icon: 'bi-house',            routerLink: '/', fragment: 'inicio' },
     { label: 'Proyectos',  icon: 'bi-rocket-takeoff',  routerLink: '/', fragment: 'proyectos' },
-    { label: 'Stack',      icon: 'bi-cpu',             routerLink: '/', fragment: 'stack' },
-    { label: 'Contacto',   icon: 'bi-envelope-paper',  routerLink: '/', fragment: 'contacto' },
+    { label: 'Stack',      icon: 'bi-cpu',             routerLink: 'stack', fragment: 'stack' },
+    { label: 'Contacto',   icon: 'bi-envelope-paper',  routerLink: 'contact-me', fragment: 'contacto' },
   ];
 /* ----- Ink bar ----- */
   @ViewChild('bar', { static: true }) bar!: ElementRef<HTMLElement>;

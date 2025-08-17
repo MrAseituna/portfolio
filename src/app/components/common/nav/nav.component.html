@@ -8,6 +8,7 @@
           [routerLink]="item.routerLink"
           [fragment]="item.fragment"
           routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
           [attr.aria-label]="item.label"
           [title]="item.label"
           (mouseenter)="hoverTo(i)"
@@ -19,10 +20,8 @@
       </li>
     }
 
-    <!-- separador visual para el botón -->
     <li class="divider" aria-hidden="true"></li>
 
-    <!-- botón de tema (fuera del QueryList de links, no afecta a la ink) -->
     <li>
       <button
         type="button"
@@ -37,7 +36,6 @@
       </button>
     </li>
 
-    <!-- ink bar deslizante solo para los links -->
     <span class="ink" [style.width.px]="inkWidth" [style.transform]="inkTransform"></span>
   </ul>
 </nav>

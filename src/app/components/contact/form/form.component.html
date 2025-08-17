@@ -1,0 +1,100 @@
+<section class="contact section" id="contacto" aria-labelledby="contact-title">
+  <div class="container">
+    <header class="head">
+      <h2 id="contact-title">Contacto</h2>
+      <p class="meta">
+        ¿Tienes una idea o proyecto? Escríbeme y te respondo cuanto antes.
+      </p>
+    </header>
+
+    <div class="card">
+      <!-- Lado info -->
+      <aside class="aside" aria-label="Información de contacto">
+        <div class="email-block">
+          <div class="email">
+            <i class="bi bi-envelope-paper" aria-hidden="true"></i>
+            <a href="mailto:rojohernandezpablo@gmail.com">rojohernandezpablo&#64;gmail.com</a>
+          </div>
+          <button type="button" class="btn ghost small" (click)="copyEmail('rojohernandezpablo@gmail.com')">
+            <i class="bi bi-clipboard" aria-hidden="true"></i>
+            <span>Copiar email</span>
+          </button>
+          @if (copied) {
+            <div class="copy-ok" role="status" aria-live="polite">¡Copiado!</div>
+          }
+        </div>
+
+        <ul class="social" aria-label="Perfiles">
+          <li><a class="chip is-link" href="https://github.com/tuusuario" target="_blank" rel="noopener">
+            <i class="bi bi-github" aria-hidden="true"></i><span>GitHub</span></a></li>
+          <li><a class="chip is-link" href="https://www.linkedin.com/in/pablorojohdez/" target="_blank" rel="noopener">
+            <i class="bi bi-linkedin" aria-hidden="true"></i><span>LinkedIn</span></a></li>
+        </ul>
+
+      </aside>
+
+      <!-- Formulario -->
+      <form class="form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <!-- honeypot anti-spam -->
+        <input type="text" formControlName="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <div class="row two">
+          <div class="field">
+            <label for="name">Nombre</label>
+            <input id="name" type="text" formControlName="name" [attr.aria-invalid]="isInvalid('name')" [attr.aria-describedby]="'err-name'">
+            @if (showError('name')) {
+              <small id="err-name" class="err">Escribe tu nombre (2–80 caracteres).</small>
+            }
+          </div>
+
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" type="email" formControlName="email" inputmode="email"
+                   [attr.aria-invalid]="isInvalid('email')" [attr.aria-describedby]="'err-email'">
+            @if (showError('email')) {
+              <small id="err-email" class="err">Introduce un email válido.</small>
+            }
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="subject">Asunto <span class="muted">(opcional)</span></label>
+          <input id="subject" type="text" formControlName="subject" [attr.aria-invalid]="isInvalid('subject')">
+        </div>
+
+        <div class="field">
+          <label for="message">Mensaje</label>
+          <textarea id="message" rows="6" formControlName="message"
+                    [attr.aria-invalid]="isInvalid('message')" [attr.aria-describedby]="'err-message'"></textarea>
+          @if (showError('message')) {
+            <small id="err-message" class="err">Cuéntame un poco (mín. 10 caracteres).</small>
+          }
+        </div>
+
+        @if (status === 'error') {
+          <div class="alert error" role="alert">
+            <i class="bi bi-exclamation-triangle" aria-hidden="true"></i>
+            <span>{{ errorMsg }}</span>
+          </div>
+        }
+        @if (status === 'success') {
+          <div class="alert ok" role="status" aria-live="polite">
+            <i class="bi bi-check2-circle" aria-hidden="true"></i>
+            <span>¡Mensaje enviado! Te responderé lo antes posible.</span>
+          </div>
+        }
+
+        <div class="actions">
+          <button class="btn primary" type="submit" [disabled]="form.invalid || status==='sending'">
+            <i class="bi" [ngClass]="status==='sending' ? 'bi-arrow-repeat' : 'bi-send'"></i>
+            <span>{{ status==='sending' ? 'Enviando…' : 'Enviar mensaje' }}</span>
+          </button>
+
+          <a class="btn ghost" href="mailto:tuemail@dominio.com?subject=Contacto%20desde%20la%20web">
+            <i class="bi bi-envelope-open"></i><span>Usar email</span>
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
