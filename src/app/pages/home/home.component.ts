@@ -16,49 +16,34 @@ export class HomeComponent {
       title: 'Frontend',
       icon: 'bi-braces-asterisk',
       skills: [
-        { name: 'Angular',      level: 85, note: 'SPA, CLI, formularios, routing' },
-        { name: 'TypeScript',   level: 80 },
-        { name: 'JavaScript',   level: 80 },
-        { name: 'HTML5',        level: 95},
-        { name: 'CSS (Layout)', level: 88, note: 'Flexbox, Grid, responsive' }
+        { name:'Angular',     level: 90, src:'https://cdn.simpleicons.org/angular',     url:'https://angular.dev' },
+        { name:'TypeScript',  level: 85, src:'https://cdn.simpleicons.org/typescript',  url:'https://www.typescriptlang.org/docs' },
+        { name:'JavaScript',  level: 80, src:'https://cdn.simpleicons.org/javascript' },
+        { name:'HTML5',       level: 95, src:'https://cdn.simpleicons.org/html5' },
+        { name:'CSS',         level: 90, src:'https://cdn.simpleicons.org/css' },
       ]
     },
     {
       title: 'Backend',
       icon: 'bi-hdd-network',
       skills: [
-        { name: 'Django (Python)', level: 90 },
-        { name: 'PHP',             level: 85 },
-        { name: 'REST API',        level: 70 },
-        { name: 'Node.js',         level: 70 },
-        { name: 'Spring Boot',     level: 60 },
-        { name: 'Moodle (plugins)', level: 90, note: 'Desarrollo y mantenimiento' },
+        { name:'Node.js',     level: 75, src:'https://cdn.simpleicons.org/nodedotjs',   url:'https://nodejs.org/docs/latest/api' },
+        { name:'PHP',         level: 80, src:'https://cdn.simpleicons.org/php' },
+        { name:'Django',      level: 85, src:'https://cdn.simpleicons.org/django' },
+        { name:'Spring Boot', level: 60, src:'https://cdn.simpleicons.org/springboot' }
       ]
     },
     {
-      title: 'Bases de datos',
-      icon: 'bi-database',
-      skills: [
-        { name: 'PostgreSQL', level: 55 },
-        { name: 'SQL',        level: 75 },
-        { name: 'MySQL/MariaDB', level: 80 }
-      ]
-    },
-    {
-      title: 'DevOps & Tools',
+      title: 'DB & DevOps',
       icon: 'bi-gear',
       skills: [
-        { name: 'Git / GitHub',   level: 85 },
-        { name: 'Docker (básico)',level: 45 },
-        { name: 'Linux / Nginx',  level: 70 }
-      ]
-    },
-    {
-      title: 'Idiomas',
-      icon: 'bi-translate',
-      skills: [
-        { name: 'Español (nativo)', level: 100 },
-        { name: 'Inglés (B2)', level: 70, note: 'FCE Cambridge' },
+        { name:'PostgreSQL',  level: 70, src:'https://cdn.simpleicons.org/postgresql' },
+        { name:'MySQL',       level: 65, src:'https://cdn.simpleicons.org/mysql' },
+        { name:'Git/GitHub',  level: 85, src:'https://cdn.simpleicons.org/git' },
+        { name:'Docker',      level: 60, src:'https://cdn.simpleicons.org/docker' },
+        { name:'Linux/Bash',       level: 70, src:'https://cdn.simpleicons.org/linux' },
+        { name:'Moodle',      level: 80, src:'https://cdn.simpleicons.org/moodle' },
+        { name:'Automatización',         level: 65, src:'https://cdn.simpleicons.org/n8n' }
       ]
     }
   ];

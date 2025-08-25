@@ -1,14 +1,16 @@
 import { NgClass } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 type Category = 'Frontend' | 'Backend' | 'Bases de datos' | 'DevOps & Tools';
-
-export interface Tech {
+type Size = 's' | 'm' | 'l';
+export interface LogoItem {
   name: string;
-  icon: string;       // Bootstrap Icons, ej: 'bi-braces-asterisk'
   category: Category;
-  url?: string;       // opcional
-  note?: string;      // tooltip opcional
+  url?: string;          // docs / repo / demo
+  src?: string;          // ruta del logo en /assets/logos/*
+  icon?: string;         // fallback: clase Bootstrap Icons, ej: 'bi-braces-asterisk'
+  size?: Size;           // s/m/l para variar el mosaico
+  note?: string;
 }
 
 @Component({
@@ -20,90 +22,43 @@ export interface Tech {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StackNowComponent {
-  @Input() title = 'Stack y herramientas';
-  @Input() techs: Tech[] = [
-    // Frontend
-    { name: 'Angular',        icon: 'bi-braces-asterisk', category: 'Frontend', note: 'SPA, CLI, formularios, routing' },
-    { name: 'TypeScript',     icon: 'bi-code-slash',      category: 'Frontend' },
-    { name: 'JavaScript',     icon: 'bi-filetype-js',     category: 'Frontend' },
-    { name: 'HTML5',          icon: 'bi-filetype-html',   category: 'Frontend' },
-    { name: 'CSS (Layout)',   icon: 'bi-filetype-css',    category: 'Frontend', note: 'Flexbox, Grid, responsive' },
+  @Input() title = 'Stack';
+  @Input() items: LogoItem[] = [
+    // --- Frontend ---
+    { name: 'Angular',     category: 'Frontend', src: 'https://cdn.simpleicons.org/angular',     icon: 'bi-braces-asterisk', url: 'https://angular.dev',                           size: 'l' },
+    { name: 'TypeScript',  category: 'Frontend', src: 'https://cdn.simpleicons.org/typescript',  icon: 'bi-code-slash',      url: 'https://www.typescriptlang.org/',               size: 'm' },
+    { name: 'JavaScript',  category: 'Frontend', src: 'https://cdn.simpleicons.org/javascript',  icon: 'bi-filetype-js',     url: 'https://developer.mozilla.org/docs/Web/JavaScript', size: 's' },
+    { name: 'HTML5',       category: 'Frontend', src: 'https://cdn.simpleicons.org/html5',       icon: 'bi-filetype-html',   url: 'https://developer.mozilla.org/docs/Web/HTML',   size: 's' },
+    { name: 'CSS',         category: 'Frontend', src: 'https://cdn.simpleicons.org/css',        icon: 'bi-filetype-css',    url: 'https://developer.mozilla.org/docs/Web/CSS',    size: 's' },
 
-    // Backend
-    { name: 'Django (Python)', icon: 'bi-filetype-py',    category: 'Backend' },
-    { name: 'PHP',             icon: 'bi-filetype-php',   category: 'Backend' },
-    { name: 'REST API',        icon: 'bi-diagram-3',      category: 'Backend' },
-    { name: 'Node.js',         icon: 'bi-hdd-network',    category: 'Backend' },
-    { name: 'Spring Boot',     icon: 'bi-cpu',            category: 'Backend' },
-    { name: 'Moodle (plugins)',icon: 'bi-mortarboard',    category: 'Backend', note: 'Desarrollo y mantenimiento' },
+    // --- Backend ---
+    { name: 'Node.js',     category: 'Backend',  src: 'https://cdn.simpleicons.org/nodedotjs',   icon: 'bi-hdd-network',     url: 'https://nodejs.org/docs/latest/api/',          size: 'm' },
+    { name: 'PHP',         category: 'Backend',  src: 'https://cdn.simpleicons.org/php',         icon: 'bi-filetype-php',    url: 'https://www.php.net/docs.php',                  size: 's' },
+    { name: 'Django',      category: 'Backend',  src: 'https://cdn.simpleicons.org/django',      icon: 'bi-cpu',             url: 'https://docs.djangoproject.com/',               size: 'm' },
+    { name: 'Spring Boot', category: 'Backend',  src: 'https://cdn.simpleicons.org/springboot',  icon: 'bi-cpu',             url: 'https://docs.spring.io/spring-boot/',           size: 's' },
 
-    // Bases de datos
-    { name: 'PostgreSQL',      icon: 'bi-database',       category: 'Bases de datos' },
-    { name: 'SQL',             icon: 'bi-database',            category: 'Bases de datos' },
-    { name: 'MySQL/MariaDB',   icon: 'bi-database',       category: 'Bases de datos' },
+    // --- Bases de datos ---
+    { name: 'PostgreSQL',      category: 'Bases de datos', src: 'https://cdn.simpleicons.org/postgresql', icon: 'bi-database', url: 'https://www.postgresql.org/docs/',     size: 'm' },
+    { name: 'MySQL/MariaDB',   category: 'Bases de datos', src: 'https://cdn.simpleicons.org/mysql',      icon: 'bi-database', url: 'https://dev.mysql.com/doc/',           size: 's' },
+    { name: 'SQL',             category: 'Bases de datos', src: 'https://cdn.simpleicons.org/sqlite',     icon: 'bi-123',      url: 'https://www.sqlite.org/lang.html',    size: 's' },
 
-    // DevOps & Tools
-    { name: 'Git / GitHub',    icon: 'bi-git',            category: 'DevOps & Tools' },
-    { name: 'Docker (básico)', icon: 'bi-box-seam',       category: 'DevOps & Tools' },
-    { name: 'Linux / Nginx',   icon: 'bi-terminal',       category: 'DevOps & Tools' },
+    // --- DevOps & Tools ---
+    { name: 'Git / GitHub',    category: 'DevOps & Tools', src: 'https://cdn.simpleicons.org/git',     icon: 'bi-git',         url: 'https://git-scm.com/doc',        size: 's' },
+    { name: 'Docker',          category: 'DevOps & Tools', src: 'https://cdn.simpleicons.org/docker',  icon: 'bi-box-seam',    url: 'https://docs.docker.com/',        size: 'm' },
+    { name: 'Linux/Bash',   category: 'DevOps & Tools', src: 'https://cdn.simpleicons.org/linux',   icon: 'bi-terminal',    url: 'https://nginx.org/en/docs/',      size: 's' },
+    { name: 'Automatización',             category: 'DevOps & Tools', src: 'https://cdn.simpleicons.org/n8n',     icon: 'bi-diagram-3',   url: 'https://docs.n8n.io/',            size: 's' },
+    { name: 'Moodle (plugins)',category: 'DevOps & Tools', src: 'https://cdn.simpleicons.org/moodle',  icon: 'bi-mortarboard', url: 'https://docs.moodle.org/',        size: 'm' },
   ];
 
   categories: (Category | 'Todos')[] = ['Todos', 'Frontend', 'Backend', 'Bases de datos', 'DevOps & Tools'];
   selected: Category | 'Todos' = 'Todos';
 
-  @ViewChild('cloud', { static: true }) cloud!: ElementRef<HTMLElement>;
-  @ViewChildren('chipEl') chipEls!: QueryList<ElementRef<HTMLAnchorElement>>;
-  private reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false;
-
-  ngAfterViewInit(): void {
-    // Limpia offsets por si llega con SSR/hidratación rara
-    this.resetOffsets();
-  }
-
   setFilter(cat: Category | 'Todos') { this.selected = cat; }
   isActive(cat: Category | 'Todos') { return this.selected === cat; }
 
-  get visible(): Tech[] {
-    return this.selected === 'Todos' ? this.techs : this.techs.filter(t => t.category === this.selected);
+  get visible(): LogoItem[] {
+    return this.selected === 'Todos' ? this.items : this.items.filter(i => i.category === this.selected);
   }
 
-  onMove(e: MouseEvent) {
-    if (this.reduceMotion) return;
-    const cloud = this.cloud.nativeElement;
-    const rect = cloud.getBoundingClientRect();
-    const mx = e.clientX - rect.left;
-    const my = e.clientY - rect.top;
-
-    const R = 140;          // radio de influencia (px)
-    const MAX = 22;         // desplazamiento máximo (px)
-
-    for (const ref of this.chipEls) {
-      const el = ref.nativeElement;
-      const r = el.getBoundingClientRect();
-      const cx = (r.left - rect.left) + r.width / 2;
-      const cy = (r.top  - rect.top)  + r.height / 2;
-
-      const dx = cx - mx;
-      const dy = cy - my;
-      const d = Math.hypot(dx, dy);
-
-      let ox = 0, oy = 0;
-      if (d < R && d > 0.0001) {
-        const force = (1 - d / R);             // 0..1
-        const scale = (force * force) * MAX;   // easing cuadrático
-        ox = (dx / d) * scale;
-        oy = (dy / d) * scale;
-      }
-      el.style.setProperty('--ox', `${ox.toFixed(1)}px`);
-      el.style.setProperty('--oy', `${oy.toFixed(1)}px`);
-    }
-  }
-
-  resetOffsets() {
-    for (const ref of this.chipEls) {
-      const el = ref.nativeElement;
-      el.style.setProperty('--ox', '0px');
-      el.style.setProperty('--oy', '0px');
-    }
-  }
+  trackByName = (_: number, it: LogoItem) => it.name;
 }

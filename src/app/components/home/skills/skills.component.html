@@ -2,46 +2,47 @@
   <div class="container">
     <header class="head">
       <h2 id="skills-title">{{ title }}</h2>
-      <p class="meta">
-        Un stack centrado en rendimiento, accesibilidad y buenas prácticas.
-      </p>
+      <p class="meta">Mi stack, en movimiento: logos y enlaces por categoría.</p>
     </header>
 
-    <div class="grid">
-      @for (group of groups; track trackGroup($index, group)) {
-        <article class="card" role="group" [attr.aria-labelledby]="'g-' + group.title">
-          <header class="card-head">
-            <i class="bi" [ngClass]="group.icon" aria-hidden="true"></i>
-            <h3 id="{{ 'g-' + group.title }}">{{ group.title }}</h3>
-          </header>
+    <!-- Una “belt” por grupo -->
+    @for (group of groups; track group.title; let gi = $index) {
+      <article class="belt-wrap" [attr.data-cat]="group.title" role="group" [attr.aria-labelledby]="'g-' + group.title">
+        <header class="belt-head">
+          <i class="bi" [ngClass]="group.icon" aria-hidden="true"></i>
+          <h3 id="{{ 'g-' + group.title }}">{{ group.title }}</h3>
+        </header>
 
-          <ul class="list">
-            @for (s of group.skills; track trackSkill($index, s)) {
-              <li class="skill">
-                <div class="row">
-                  <span class="name">{{ s.name }}</span>
-                  <span class="val" [attr.aria-label]="s.level + '%'">{{ s.level }}%</span>
-                </div>
-
-                <div
-                  class="meter"
-                  role="progressbar"
-                  [attr.aria-valuemin]="0"
-                  [attr.aria-valuemax]="100"
-                  [attr.aria-valuenow]="s.level"
-                  [title]="(s.note ? s.note + ' · ' : '') + s.level + '%'"
-                >
-                  <span class="fill" [style.width.%]="s.level"></span>
-                </div>
-
-                @if (s.note) {
-                  <div class="note">{{ s.note }}</div>
-                }
-              </li>
+        <div class="belt"
+             [class.rev]="gi % 2 === 1"
+             [style.--dur]="beltDuration(group.skills.length, gi)">
+          <div class="track" role="list">
+            @for (rep of reps; track rep) {
+              @for (s of group.skills; track s.name) {
+                <a class="tile {{ sizeClass(s) }}" role="listitem"
+                   [href]="s.url || null"
+                   [attr.target]="s.url ? '_blank' : null"
+                   [attr.rel]="s.url ? 'noopener' : null"
+                   [title]="s.name + (s.note ? ' · ' + s.note : '')">
+                  <div class="plate" aria-hidden="true">
+                    @if (s.src) {
+                      <img [src]="s.src" [alt]="s.name" loading="lazy" decoding="async" />
+                    } @else if (s.icon) {
+                      <i class="bi" [ngClass]="s.icon"></i>
+                    } @else {
+                      <span class="letter">{{ s.name.slice(0,1) }}</span>
+                    }
+                  </div>
+                  <span class="label">{{ s.name }}</span>
+                </a>
+              }
             }
-          </ul>
-        </article>
-      }
-    </div>
+          </div>
+          <!-- desvanecidos laterales -->
+          <div class="fade left" aria-hidden="true"></div>
+          <div class="fade right" aria-hidden="true"></div>
+        </div>
+      </article>
+    }
   </div>
 </section>

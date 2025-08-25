@@ -1,5 +1,4 @@
-import { NgClass } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, Input, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { StackNowComponent } from "../../components/stack/stack-now/stack-now.component";
 import { StackLearningComponent } from "../../components/stack/stack-learning/stack-learning.component";
 
@@ -16,38 +15,12 @@ export interface Tech {
 @Component({
   selector: 'app-stack',
   standalone: true,
-  imports: [NgClass, StackNowComponent, StackLearningComponent],
+  imports: [StackNowComponent, StackLearningComponent],
   templateUrl: './stack.component.html',
   styleUrl: './stack.component.css'
 })
 export class StackComponent {
-  @Input() title = 'Stack y herramientas';
-  @Input() techs: Tech[] = [
-    // Frontend
-    { name: 'Angular',        icon: 'bi-braces-asterisk', category: 'Frontend', note: 'SPA, CLI, formularios, routing' },
-    { name: 'TypeScript',     icon: 'bi-code-slash',      category: 'Frontend' },
-    { name: 'JavaScript',     icon: 'bi-filetype-js',     category: 'Frontend' },
-    { name: 'HTML5',          icon: 'bi-filetype-html',   category: 'Frontend' },
-    { name: 'CSS (Layout)',   icon: 'bi-filetype-css',    category: 'Frontend', note: 'Flexbox, Grid, responsive' },
-
-    // Backend
-    { name: 'Django (Python)', icon: 'bi-filetype-py',    category: 'Backend' },
-    { name: 'PHP',             icon: 'bi-filetype-php',   category: 'Backend' },
-    { name: 'REST API',        icon: 'bi-diagram-3',      category: 'Backend' },
-    { name: 'Node.js',         icon: 'bi-hdd-network',    category: 'Backend' },
-    { name: 'Spring Boot',     icon: 'bi-cpu',            category: 'Backend' },
-    { name: 'Moodle (plugins)',icon: 'bi-mortarboard',    category: 'Backend', note: 'Desarrollo y mantenimiento' },
-
-    // Bases de datos
-    { name: 'PostgreSQL',      icon: 'bi-database',       category: 'Bases de datos' },
-    { name: 'SQL',             icon: 'bi-database',            category: 'Bases de datos' },
-    { name: 'MySQL/MariaDB',   icon: 'bi-database',       category: 'Bases de datos' },
-
-    // DevOps & Tools
-    { name: 'Git / GitHub',    icon: 'bi-git',            category: 'DevOps & Tools' },
-    { name: 'Docker (básico)', icon: 'bi-box-seam',       category: 'DevOps & Tools' },
-    { name: 'Linux / Nginx',   icon: 'bi-terminal',       category: 'DevOps & Tools' },
-  ];
+  @Input() title = 'Stack y herramientas'
 
   categories: (Category | 'Todos')[] = ['Todos', 'Frontend', 'Backend', 'Bases de datos', 'DevOps & Tools'];
   selected: Category | 'Todos' = 'Todos';
@@ -63,10 +36,6 @@ export class StackComponent {
 
   setFilter(cat: Category | 'Todos') { this.selected = cat; }
   isActive(cat: Category | 'Todos') { return this.selected === cat; }
-
-  get visible(): Tech[] {
-    return this.selected === 'Todos' ? this.techs : this.techs.filter(t => t.category === this.selected);
-  }
 
   onMove(e: MouseEvent) {
     if (this.reduceMotion) return;

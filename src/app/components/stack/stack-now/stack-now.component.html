@@ -2,13 +2,13 @@
   <div class="container">
     <header class="head">
       <h2 id="stack-title">{{ title }}</h2>
-      <p class="meta">Mi stack principal. Pasa el ratón: las tecnologías reaccionan.</p>
+      <p class="meta">Tecnologías que uso a diario. Sin porcentajes: logos y enlaces.</p>
 
-      <div class="filters" role="tablist" aria-label="Filtros de categoría">
+      <div class="filters" role="tablist" aria-label="Filtrar por categoría">
         @for (cat of categories; track cat) {
           <button
             type="button"
-            class="chip-filter"
+            class="chip"
             role="tab"
             [attr.aria-selected]="isActive(cat)"
             [class.active]="isActive(cat)"
@@ -20,27 +20,28 @@
       </div>
     </header>
 
-    <div class="cloud"
-         #cloud
-         (mousemove)="onMove($event)"
-         (mouseleave)="resetOffsets()"
-         role="list"
-         aria-label="Tecnologías">
-      @for (t of visible; track t.name) {
+    <div class="logo-grid" role="list">
+      @for (it of visible; track trackByName($index, it)) {
         <a
-          #chipEl
-          class="chip"
+          class="tile"
           role="listitem"
-          [href]="t.url || null"
-          [attr.title]="t.note || t.name"
+          [href]="it.url || null"
           target="_blank" rel="noopener"
-          [attr.aria-label]="t.name"
-          [attr.data-cat]="t.category"
-          [class.is-link]="!!t.url"
+          [class.size-s]="it.size === 's'"
+          [class.size-m]="it.size === 'm'"
+          [class.size-l]="it.size === 'l'"
+          [attr.title]="it.note || it.name"
+          [attr.data-cat]="it.category"
+          [class.is-link]="!!it.url"
         >
-          <span class="dot" aria-hidden="true"></span>
-          <i class="bi" [ngClass]="t.icon" aria-hidden="true"></i>
-          <span class="label">{{ t.name }}</span>
+          <div class="plate">
+            @if (it.src) {
+              <img [src]="it.src" [alt]="it.name" loading="lazy" decoding="async" />
+            } @else {
+              <i class="bi" [ngClass]="it.icon" aria-hidden="true"></i>
+            }
+          </div>
+          <span class="label">{{ it.name }}</span>
         </a>
       }
     </div>
